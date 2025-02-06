@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>도서 대출</h1>
-	<form action="/myBorrow" method="post">
+	<form action="/borrow" method="post">
 		<fieldset>
 			<legend>고객 정보</legend>
 			<label for="userName">고객명 : </label>

@@ -24,7 +24,7 @@
 		피자 주문하기
 	</a>
 	<h1>과제</h1>
-	<a href="/loanPage">
+	<a href="/loan">
 		도서 대출하기
 	</a>
 </body>
