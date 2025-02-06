@@ -19,7 +19,7 @@ public class BookReservationController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
@@ -42,7 +42,7 @@ public class BookReservationController extends HttpServlet {
 			pay = 2000;
 		}
 		
-		pay *= Integer.parseInt(loanPeriod);
+		pay += (Integer.parseInt(loanPeriod)-1)*500;
 		
 		RequestDispatcher view = request.getRequestDispatcher("views/homework/inquiryMyborrow.jsp");
 		
