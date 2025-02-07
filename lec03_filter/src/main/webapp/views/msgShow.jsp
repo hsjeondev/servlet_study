@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%
 	String msg = (String)request.getAttribute("msg");
+	String upperMsg = (String)request.getAttribute("upperMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,10 @@
 	<h1>메시지</h1>
 	<p>
 		<%=msg %>
+	</p>
+	<h1>대문자 변환 메시지</h1>
+	<p>
+		<%=upperMsg %>
 	</p>
 </body>
 </html>

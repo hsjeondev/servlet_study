@@ -21,5 +21,13 @@
 			<input type="submit" value="보내기">
 		</fieldset>
 	</form>
+	<h2>실습 문제</h2>
+	<form action="/receive/upper" method="post">
+		<fieldset>
+			<legend>대문자로 변환할 문자 입력</legend>
+			<textarea cols="10" rows="3" name="upperMsg"></textarea>
+			<button>변환</button>
+		</fieldset>
+	</form>
 </body>
 </html>

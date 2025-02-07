@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name="receiveMsgServlet", urlPatterns="/receive/msg")
-public class ReceiveMsgServlet extends HttpServlet {
+@WebServlet("/receive/upper")
+public class ChangeUpper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ReceiveMsgServlet() {}
+    public ChangeUpper() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("===== 확인 =====");
-		String msg = request.getParameter("msg");
+		String upperMsg = request.getParameter("upperMsg");
+		System.out.println(upperMsg);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/msgShow.jsp");
-		request.setAttribute("msg", msg);
+	
+		request.setAttribute("upperMsg", upperMsg);
+		
 		view.forward(request, response);
-		System.out.println(msg);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
