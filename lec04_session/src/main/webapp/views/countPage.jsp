@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="javax.servlet.http.Cookie" %>
+<%-- <%@ page import="javax.servlet.http.Cookie" %> JSP 내장객체이기 때문에 import 필요 없음 --%>
 <!DOCTYPE html>
 <%
 	int visitCount = 1;
