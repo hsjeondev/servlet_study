@@ -17,7 +17,8 @@ public class ChangePageServlet extends HttpServlet {
     public ChangePageServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("views/countPage.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/countPage.jsp");
+//		RequestDispatcher view = getServletContext().getRequestDispatcher("views/countPage.jsp");		
 		view.forward(request, response);
 	}
 
