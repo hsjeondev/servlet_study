@@ -61,5 +61,9 @@
 			<%=memberId %>
 		</li>
 	</ol>
+	<hr>
+	<h1>장바구니 담기</h1>
+	<a href="/productList">상품목록</a>
+	<a href="/carList">장바구니</a>
 </body>
 </html>
