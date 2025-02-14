@@ -9,20 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/*
- * 클래스명 : MemberCreateServlet 
- * 주요기능 : 회원가입 화면으로 전환
- * 개발자 : 전홍식
- * 개발일자 : 25-02-13
-*/
-@WebServlet("/memberCreate")
-public class MemberCreateServlet extends HttpServlet {
+@WebServlet("/memberUpdate")
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MemberCreateServlet() {}
+    public MemberUpdateServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("/views/member/create.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/member/update.jsp");
 		view.forward(request, response);
 	}
 

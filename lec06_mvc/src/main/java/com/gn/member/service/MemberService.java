@@ -17,4 +17,25 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+	
+	public Member loginMember(String id, String pw) {
+		Connection conn = getConnection();
+		Member member = memberDao.loginMember(id, pw, conn);
+		close(conn);
+		return member;
+	}
+	
+	public int updateMember(Member member) {
+		Connection conn = getConnection();
+		int result = memberDao.updateMember(member, conn);
+		close(conn);
+		return result;
+	}
+	
+	public Member selectMember(int memberNo) {
+		Connection conn = getConnection();
+		Member member = memberDao.selectMember(memberNo, conn);
+		close(conn);
+		return member;
+	}
 }

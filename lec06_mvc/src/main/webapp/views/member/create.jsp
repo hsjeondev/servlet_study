@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
 <link href="/resources/css/member/create.css" rel="stylesheet" type="text/css">
+<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.js"></script>
 </head>
 <body>
 	<%@ include file="../include/header.jsp" %>
@@ -32,7 +33,7 @@
 				</form>
 			</div>
 			<div class="login">
-				<a href="#">로그인</a>
+				<a href="/memberLogin">로그인</a>
 			</div>
 		</div>
 	</section>
@@ -55,7 +56,29 @@
 				alert("비밀번호가 일치하지 않습니다.");
 				form.member_pw_check.focus();
 			} else {
-				form.submit();
+				/* form.submit(); */
+				
+				// ajax 내부에 주석을 쓰면 실행이 안 될 때가 있음.
+				$.ajax({
+					url:"/memberCreateEnd",
+					type : "post",
+					data : {"member_id":form.member_id.value,
+							"member_pw":form.member_pw.value,
+							"member_name":form.member_name.value},
+					dataType : "JSON",
+					contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+					success : function(data) {
+						// res_msg를 alert창에 출력 -> alert의 확인 버튼을 누르면 다음 기능 수행
+						alert(data.res_msg);
+						// 만약에 res_code가 200, / 경로로 이동(location)
+						if(data.res_code == "200") {
+							location.href="/";
+						}
+					},
+					error : function() {
+						
+					}
+				})
 			}
 		}
 	</script>

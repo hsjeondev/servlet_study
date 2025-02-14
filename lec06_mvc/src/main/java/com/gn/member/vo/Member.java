@@ -21,6 +21,13 @@ public class Member {
 		this.memberName = memberName;
 	}
 
+	public Member(int memberNo, String memberPw, String memberName) {
+		super();
+		this.memberNo = memberNo;
+		this.memberPw = memberPw;
+		this.memberName = memberName;
+	}
+
 	public int getMemberNo() {
 		return memberNo;
 	}
