@@ -15,10 +15,24 @@ import com.gn.board.vo.Board;
 
 public class BoardService {
 	
-	public List<Board> selectBoardList() {
+	public Board selectBoardOne(int boardNo) {
+		Connection conn = getConnection();
+		Board board = new BoardDao().selectBoardOne(boardNo, conn);
+		close(conn);
+		return board;
+	}
+	
+	public int selectBoardCount(Board option) {
+		Connection conn = getConnection();
+		int result = new BoardDao().selectBoardCount(option, conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<Board> selectBoardList(Board option) {
 		Connection conn = getConnection();
 		List<Board> resultList = new ArrayList<Board>();
-		resultList = new BoardDao().selectBoardList(conn);
+		resultList = new BoardDao().selectBoardList(option,conn);
 		return resultList;
 	}
 

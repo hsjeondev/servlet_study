@@ -2,7 +2,9 @@ package com.gn.board.vo;
 
 import java.time.LocalDateTime;
 
-public class Board {
+import com.gn.common.vo.Paging;
+
+public class Board extends Paging{
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
@@ -10,6 +12,7 @@ public class Board {
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
 	private String memberName;
+	private String fileNewName;
 
 	public Board() {}
 
@@ -33,6 +36,18 @@ public class Board {
 		this.memberName = memberName;
 		this.regDate = regDate;
 		this.modDate = modDate;
+	}
+	
+	public Board(int boardNo, String boardTitle, String boardContent, String memberName, LocalDateTime regDate,
+			LocalDateTime modDate, String fileNewName) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.memberName = memberName;
+		this.regDate = regDate;
+		this.modDate = modDate;
+		this.fileNewName = fileNewName;
 	}
 
 	public int getBoardNo() {
@@ -89,6 +104,14 @@ public class Board {
 
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+	
+	public String getFileNewName() {
+		return fileNewName;
+	}
+
+	public void setFileNewName(String fileNewName) {
+		this.fileNewName = fileNewName;
 	}
 
 	@Override

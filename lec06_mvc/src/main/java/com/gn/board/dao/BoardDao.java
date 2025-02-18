@@ -15,7 +15,62 @@ import com.gn.board.vo.Board;
 
 public class BoardDao {
 	
-	public List<Board> selectBoardList(Connection conn) {
+	public Board selectBoardOne(int boardNo, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board board = null;
+		try {
+			String sql = "SELECT b.board_no ,b.board_title ,b.board_content ,m.member_name ,b.reg_date ,b.mod_date ,a.new_name "
+					+ " FROM board b "
+					+ " JOIN member m "
+					+ " ON b.board_writer = m.member_no "
+					+ " JOIN attach a "
+					+ " ON b.board_no = a.new_name"
+					+ " WHERE b.board_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int no = rs.getInt(1);
+				String title = rs.getString(2);
+				String content = rs.getString(3);
+				String name = rs.getString(4);
+				LocalDateTime regDate = rs.getTimestamp(5).toLocalDateTime();
+				LocalDateTime modDate = rs.getTimestamp(6).toLocalDateTime();
+				String fileNewName = rs.getString(7);
+				board = new Board(no, title, content, name, regDate, modDate, fileNewName);
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			close(rs, pstmt);
+		}
+		return board;
+	}
+	
+	public int selectBoardCount(Board option, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			String sql = "SELECT COUNT(*) FROM board ";
+			if(option.getBoardTitle() != null) {
+				sql += " WHERE board_title LIKE CONCAT('%', '"+option.getBoardTitle()+"', '%')";
+			}
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt);
+		}
+		return result;
+	}
+	
+	public List<Board> selectBoardList(Board option, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Board> resultList = new ArrayList<Board>();
@@ -24,6 +79,11 @@ public class BoardDao {
 					+ " FROM board b "
 					+ " JOIN member m "
 					+ " ON b.board_writer = m.member_no ";
+			if(option.getBoardTitle() != null) {
+				sql += " WHERE b.board_title LIKE CONCAT('%','"+option.getBoardTitle()+"','%')";
+			}
+			///// 추가 /////
+			sql += " LIMIT " + option.getLimitPageNo()+ " ," + option.getNumPerPage();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
