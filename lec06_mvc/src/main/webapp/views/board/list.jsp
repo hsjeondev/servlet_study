@@ -3,10 +3,11 @@
 <%@ page import="java.util.*"  %>
 <%@ page import="com.gn.board.vo.Board" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-	@SuppressWarnings("unchecked")
-	List<Board> list = (List<Board>)request.getAttribute("posts");
-	Board paging = (Board)request.getAttribute("paging");
+	request.getAttribute("posts");
+	request.getAttribute("paging");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,7 @@
 			<div class="search">
 				<form action="/boardList" name="search_board_form" method="get">
 					<input type="text" name="board_title" placeholder="검색하고자 하는 게시글 제목을 입력하세요."
-					value="<%=paging.getBoardTitle() == null ? "" : paging.getBoardTitle()%>">
+					value="${empty paging.boardTitle ? '' : paging.boardTitle}">
 					<input type="submit" value="검색">
 				</form>	
 			</div>
@@ -49,41 +50,44 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%if(!list.isEmpty()) {%>
-							<%for(int i = 0; i < list.size(); i++) {%>
-							<tr data-board-no="<%=list.get(i).getBoardNo()%>">
-								<td><%=(paging.getNowPage()-1)*paging.getNumPerPage()+(i+1) %></td>
-								<td><%=list.get(i).getBoardTitle() %></td>
-								<td><%=list.get(i).getMemberName() %></td>
-								<td><%=list.get(i).getRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) %></td>
-							</tr>
-						<%}%>
-						<%} else {%>
+						<c:if test="${not empty posts }">
+							<c:forEach var="post" items="${posts }" varStatus="vs">
+								<tr data-board-no="${post.boardNo }">
+									<td>${(paging.nowPage - 1) * paging.numPerPage + (vs.index+1) }</td>
+									<td>${post.boardTitle}</td>
+									<td>${post.memberName}</td>
+									<td>${post.regDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty posts }">
 							<tr>
 								<td colSpan="4">데이터가 없습니다.</td>
 							</tr>
-						<%} %>
+						</c:if>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</section>
-	<%if(paging != null) {%>
+	<c:if test="${not empty paging }">
 		<div class="center">
 			<div class="pagination">
-				<% String boardTitleParam = (paging.getBoardTitle() != null) ? "&board_title=" + paging.getBoardTitle() : ""; %>
-				<% if (paging.isPrev()) { %>
-				    <a href="/boardList?nowPage=<%= paging.getPageBarStart() - 1 %><%= boardTitleParam %>">&laquo;</a>
-				<% } %>
-				<% for (int i = paging.getPageBarStart(); i <= paging.getPageBarEnd(); i++) { %>
-				    <a href="/boardList?nowPage=<%= i %><%= boardTitleParam %>"><%= i %></a>
-				<% } %>
-				<% if (paging.isNext()) { %>
-				    <a href="/boardList?nowPage=<%= paging.getPageBarEnd() + 1 %><%= boardTitleParam %>">&raquo;</a>
-				<% } %>
+				<c:if test="${not empty paging.boardTitle}">
+    				<c:set var="boardTitleParam" value="${'&board_title='}${paging.boardTitle}" />
+				</c:if>
+				<c:if test="${paging.prev}">
+				    <a href="/boardList?nowPage=${paging.pageBarStart - 1}${boardTitleParam}">&laquo;</a>
+				</c:if>
+				<c:forEach var="i" begin="${paging.pageBarStart}" end="${paging.pageBarEnd}">
+				    <a href="/boardList?nowPage=${i}${boardTitleParam}">${i}</a>
+				</c:forEach>
+				<c:if test="${paging.next}">
+				    <a href="/boardList?nowPage=${paging.pageBarEnd + 1}${boardTitleParam}">&raquo;</a>
+				</c:if>
 			</div>
 		</div>
-	<%}%>
+	</c:if>
 	<script>
 		$('.board_list tbody tr').on('click', function() {
 			const boardNo = $(this).data('board-no');
