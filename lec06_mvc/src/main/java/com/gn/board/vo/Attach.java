@@ -17,6 +17,14 @@ public class Attach {
 		this.newName = newName;
 		this.attachPath = attachPath;
 	}
+	
+	public Attach(int attachNo, int boardNo, String oriName, String attachPath) {
+		super();
+		this.attachNo = attachNo;
+		this.boardNo = boardNo;
+		this.oriName = oriName;
+		this.attachPath = attachPath;
+	}
 
 	public int getAttachNo() {
 		return attachNo;

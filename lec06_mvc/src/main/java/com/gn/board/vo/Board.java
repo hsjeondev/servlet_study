@@ -12,7 +12,7 @@ public class Board extends Paging{
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
 	private String memberName;
-	private String fileNewName;
+	private int attachNo;
 
 	public Board() {}
 
@@ -39,7 +39,7 @@ public class Board extends Paging{
 	}
 	
 	public Board(int boardNo, String boardTitle, String boardContent, String memberName, LocalDateTime regDate,
-			LocalDateTime modDate, String fileNewName) {
+			LocalDateTime modDate, int attachNo) {
 		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
@@ -47,7 +47,7 @@ public class Board extends Paging{
 		this.memberName = memberName;
 		this.regDate = regDate;
 		this.modDate = modDate;
-		this.fileNewName = fileNewName;
+		this.attachNo = attachNo;
 	}
 
 	public int getBoardNo() {
@@ -106,12 +106,12 @@ public class Board extends Paging{
 		this.memberName = memberName;
 	}
 	
-	public String getFileNewName() {
-		return fileNewName;
+	public int getAttachNo() {
+		return attachNo;
 	}
 
-	public void setFileNewName(String fileNewName) {
-		this.fileNewName = fileNewName;
+	public void setAttachNo(int attachNo) {
+		this.attachNo = attachNo;
 	}
 
 	@Override
