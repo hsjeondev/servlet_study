@@ -103,7 +103,8 @@ public class BoardDao {
 			String sql = "SELECT b.board_no ,b.board_title ,b.board_content ,m.member_name ,b.reg_date ,b.mod_date "
 					+ " FROM board b "
 					+ " JOIN member m "
-					+ " ON b.board_writer = m.member_no ";
+					+ " ON b.board_writer = m.member_no "
+					+ " ORDER BY b.reg_date";
 			if(option.getBoardTitle() != null) {
 				sql += " WHERE b.board_title LIKE CONCAT('%','"+option.getBoardTitle()+"','%')";
 			}

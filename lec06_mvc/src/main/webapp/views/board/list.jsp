@@ -4,7 +4,7 @@
 <%@ page import="com.gn.board.vo.Board" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.getAttribute("posts");
 	request.getAttribute("paging");
@@ -16,7 +16,8 @@
 <title>게시판</title>
 <link href="/resources/css/board/list.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/include/paging.css" rel="stylesheet" type="text/css">
-<script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/resources/js/jquery-3.7.1.js"></script> --%>
+<script src="<c:url value='/resuorces/js/jquery-3.7.1.js'/>"></script>
 </head>
 <body>
 	<%@ include file="/views/include/header.jsp" %>
@@ -26,7 +27,7 @@
 			<div class="search">
 				<form action="/boardList" name="search_board_form" method="get">
 					<input type="text" name="board_title" placeholder="검색하고자 하는 게시글 제목을 입력하세요."
-					value="${empty paging.boardTitle ? '' : paging.boardTitle}">
+					value="${paging.boardTitle}">
 					<input type="submit" value="검색">
 				</form>	
 			</div>
@@ -56,7 +57,11 @@
 									<td>${(paging.nowPage - 1) * paging.numPerPage + (vs.index+1) }</td>
 									<td>${post.boardTitle}</td>
 									<td>${post.memberName}</td>
-									<td>${post.regDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}</td>
+									<%-- <td>${post.regDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}</td> --%>
+										<fmt:parseDate value="${post.regDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="strRedDate" />
+									<td>
+										<fmt:formatDate value="${strRedDate}" pattern="yy-MM-dd HH:mm" />
+									</td>
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -77,7 +82,10 @@
     				<c:set var="boardTitleParam" value="${'&board_title='}${paging.boardTitle}" />
 				</c:if>
 				<c:if test="${paging.prev}">
-				    <a href="/boardList?nowPage=${paging.pageBarStart - 1}${boardTitleParam}">&laquo;</a>
+				<c:url var="testUrl" value="/boardList">
+					<c:param name="nowPage" value="${paging.pageBarStart - 1}${boardTitleParam}"/>
+				</c:url>
+				    <a href="${testUrl}">&laquo;</a>
 				</c:if>
 				<c:forEach var="i" begin="${paging.pageBarStart}" end="${paging.pageBarEnd}">
 				    <a href="/boardList?nowPage=${i}${boardTitleParam}">${i}</a>
