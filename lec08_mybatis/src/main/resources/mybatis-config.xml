@@ -5,6 +5,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<properties resource="driver.properties"></properties>
+	<typeAliases>
+		<typeAlias type="com.gn.board.vo.Board" alias="board"/>
+	</typeAliases>
 	<environments default="development">
 		<!-- id는 개발자가 임의로 설정 -->
 		<environment id="development">
